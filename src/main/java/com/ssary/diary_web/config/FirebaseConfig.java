@@ -1,2 +1,4 @@
-package com.ssary.diary_web.config;public class FirebaseConfig {
+package com.ssary.diary_web.config;
+
+public class FirebaseConfig {
 }

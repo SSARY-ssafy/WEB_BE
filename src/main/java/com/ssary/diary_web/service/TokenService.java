@@ -1,2 +1,4 @@
-package com.ssary.diary_web.service;public class TokenService {
+package com.ssary.diary_web.service;
+
+public class TokenService {
 }

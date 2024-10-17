@@ -1,2 +1,4 @@
-package com.ssary.diary_web.repository;public class UserRepository {
+package com.ssary.diary_web.repository;
+
+public class UserRepository {
 }
