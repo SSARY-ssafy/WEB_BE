@@ -1,13 +1,13 @@
-# SSARY-WEB <hr>
+# SSARY-WEB
+ <hr>
 
-## 배포주소 <hr>
+## 배포주소
 
-## 웹 개발팀 소개 <hr>
-
-## Requirements <hr>
+## 웹 개발팀 소개 
+## Requirements
 Java 17
 
-## Stack <hr>
+## Stack 
 ### Environment
 
 ### Development
