@@ -5,6 +5,7 @@ import com.ssary.diary_web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,10 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
+    @Override
+    public List<User> getUserList() {
+        return userRepository.findAll();
+    }
 
     @Override
     public Optional<User> login(String email, String password) {

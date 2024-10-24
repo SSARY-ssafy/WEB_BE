@@ -2,6 +2,7 @@ package com.ssary.diary_web.service;
 
 import com.ssary.diary_web.domain.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -11,4 +12,8 @@ public interface UserService {
 
     // 회원가입
     User saveUser(User user);
+
+    //전체 사용자 목록 불러오기
+    public List<User> getUserList();
+
 }

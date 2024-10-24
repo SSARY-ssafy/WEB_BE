@@ -3,6 +3,7 @@ package com.ssary.diary_web.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -14,28 +15,15 @@ import java.util.Date;
 public class User {
 
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-
-    @Column(name = "generate", nullable = false)
     private Integer generate;
-
-    @Column(name = "class", nullable = false)
     private Integer classId;
-
-    @Column(name = "name", nullable = false, length = 45)
     private String name;
-
-    @Column(name = "email", nullable = false, length = 45)
     private String email;
-
-    @Column(name = "birth")
     private Date birth;
-
-    @Column(name = "password", nullable = false, length = 45)
+    private String grade;
     private String password;
-
-    @Column(name = "permission", nullable = false)
     private Byte permission = 0;
+    private Byte agree = 0;
 }
