@@ -1,2 +1,4 @@
-package com.ssary.diary_web.domain;public class Todo {
+package com.ssary.diary_web.domain;
+
+public class Todo {
 }

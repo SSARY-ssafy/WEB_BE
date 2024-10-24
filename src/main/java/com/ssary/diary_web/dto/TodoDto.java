@@ -1,2 +1,4 @@
-package com.ssary.diary_web.dto;public class TodoDto {
+package com.ssary.diary_web.dto;
+
+public class TodoDto {
 }
