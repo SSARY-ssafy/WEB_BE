@@ -30,7 +30,7 @@ public class UserController {
 
         if (loginUser.isPresent()) {
             session.setAttribute("user", loginUser.get());
-            return "redirect:home"; // 로그인 성공 시 home 페이지로 리다이렉트
+            return "redirect:home/"; // 로그인 성공 시 home 페이지로 리다이렉트
             //return redirect:~/~/home;
         }
 
