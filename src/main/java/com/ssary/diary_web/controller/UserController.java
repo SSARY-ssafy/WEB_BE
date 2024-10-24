@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
@@ -18,7 +19,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping({"/", "/login"})
+    @GetMapping("/")
+    public String home(){
+        return "home";
+    }
+
+    @GetMapping("/login")
     public String loginform(){
         return "loginform";
     }
@@ -29,17 +35,16 @@ public class UserController {
         Optional<User> loginUser = userService.login(user.getEmail(), user.getPassword());
 
         if (loginUser.isPresent()) {
-            session.setAttribute("user", loginUser.get());
-            return "redirect:home/"; // 로그인 성공 시 home 페이지로 리다이렉트
-            //return redirect:~/~/home;
+            session.setAttribute("loginUser", loginUser.get());
+            return "redirect:/"; // 로그인 성공 시 home 페이지로 리다이렉트
         }
 
-        return "redirect:/login"; // 로그인 실패 시 로그인 페이지로 리다이렉트
+        return "redirect:/login";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "redirect:";
+        return "redirect:/";
     }
 }
