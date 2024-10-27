@@ -75,7 +75,7 @@ ENGINE = InnoDB;
 
 use ssary;
 INSERT INTO `ssary`.`user` (`user_id`, `generate`, `class`, `name`, `email`, `birth`, `password`, `agree`, `permission`, `grade`) VALUES
-(1, 12, 1, 'admin', 'test1@test.com', '1990-01-01', '1234', 1, 0, 'admin'),
+(1, 12, 1, 'admin', 'test1@test.com', '1990-01-01', '1234', 1, 1, 'admin'),
 (2, 12, 2, 'User1', 'test2@test.com', '1991-02-02', '1234', 1, 0, 'basic'),
 (3, 12, 4, 'User2', 'test3@test.com', '1992-03-03', '1234', 1, 0, 'basic'),
 (4, 12, 3, 'User3', 'test4@test.com', '1993-04-04', '1234', 1, 0, 'basic'),
@@ -84,7 +84,7 @@ INSERT INTO `ssary`.`user` (`user_id`, `generate`, `class`, `name`, `email`, `bi
 (7, 12, 10, 'User6', 'test7@test.com', '1996-07-07', '1234', 1, 0, 'basic'),
 (8, 12, 12, 'User7', 'test8@test.com', '1997-08-08', '1234', 1, 0, 'basic'),
 (9, 12, 6, 'User8', 'test9@test.com', '1998-09-09', '1234', 1, 0, 'basic'),
-(10, 12, 6, 'User9', 'test10@test.com', '1999-10-10', '1234', 1, 0, 'basic');
+(10, 12, 6, 'User9', 'test10@test.com', '1999-10-10', '1234', 1, 1, 'basic');
 
 
 SELECT * FROM USER;

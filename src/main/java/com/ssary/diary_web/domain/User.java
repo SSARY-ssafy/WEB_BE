@@ -18,6 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private Integer generate;
+    @Column(name = "class")
     private Integer classId;
     private String name;
     private String email;

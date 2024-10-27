@@ -45,4 +45,16 @@ public class UserServiceImpl implements UserService{
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    @Override
+    public boolean permitUser(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPermission((byte) 1); // 권한을 '허가' 상태로 변경
+            userRepository.save(user); // 변경된 정보를 데이터베이스에 저장
+            return true;
+        }
+        return false;
+    }
 }

@@ -4,11 +4,10 @@ import com.ssary.diary_web.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-@Configuration
+@Component
 public class AdminInterceptor implements HandlerInterceptor {
 
     @Override
@@ -17,7 +16,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         User loginUser = (User) session.getAttribute("loginUser");
 
         if(!loginUser.getGrade().equals("admin")) {
-            response.sendRedirect("list");
+            response.sendRedirect("/");
             return false;
         }
         return true;

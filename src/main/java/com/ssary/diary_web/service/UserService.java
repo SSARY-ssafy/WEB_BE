@@ -13,7 +13,9 @@ public interface UserService {
     // 회원가입
     User saveUser(User user);
 
-    //전체 사용자 목록 불러오기
+    // 전체 사용자 목록 불러오기
     public List<User> getUserList();
 
+    // 사용자 인증
+    public boolean permitUser(int userId);
 }

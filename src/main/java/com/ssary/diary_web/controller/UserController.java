@@ -6,13 +6,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -31,6 +29,9 @@ public class UserController {
         return "loginform";
     }
 
+    @GetMapping("/waiting")
+    public String waiting(){ return "waiting";}
+
     @GetMapping("/list")
     public String showList(Model model){
         List<User> list = userService.getUserList();
@@ -47,7 +48,6 @@ public class UserController {
             session.setAttribute("loginUser", loginUser.get());
             return "redirect:/"; // 로그인 성공 시 home 페이지로 리다이렉트
         }
-
         return "redirect:/login";
     }
 
@@ -55,5 +55,11 @@ public class UserController {
     public String logout(HttpSession session){
         session.invalidate();
         return "redirect:/";
+    }
+
+    @PostMapping("/permit")
+    public String permit(@RequestParam("id") int id){
+        userService.permitUser(id);
+        return "redirect:/list";
     }
 }
