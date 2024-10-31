@@ -3,7 +3,7 @@ mail:
   host: smtp.gmail.com
   port: 587
   username: "ssary.official@gmail.com"
-  password: "lnxsqxqjjqnanlhr"
+  password: "lnxs qxqj jqna nlhr"
   properties:
     mail:
       smtp:
