@@ -23,7 +23,7 @@ public class User {
     private String name;
     private String email;
     private Date birth;
-    private String grade;
+    private String grade = "basic";
     private String password;
     private Byte permission = 0;
     private Byte agree = 0;

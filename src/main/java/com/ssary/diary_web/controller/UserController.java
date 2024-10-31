@@ -62,4 +62,15 @@ public class UserController {
         userService.permitUser(id);
         return "redirect:/list";
     }
+
+    @GetMapping("/regist")
+    public String registform(){
+        return "registform";
+    }
+
+    @PostMapping("/regist")
+    public String regist(@ModelAttribute User user){
+        userService.saveUser(user);
+        return "redirect:/login";
+    }
 }

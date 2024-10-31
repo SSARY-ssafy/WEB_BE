@@ -3,15 +3,15 @@ CREATE SCHEMA IF NOT EXISTS `ssary` DEFAULT CHARACTER SET utf8 ;
 USE `ssary` ;
 
 CREATE TABLE IF NOT EXISTS `ssary`.`user` (
-  `user_id` INT NOT NULL,
+  `user_id` INT NOT NULL auto_increment,
   `generate` INT NOT NULL,
   `class` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `birth` DATE NULL,
   `password` VARCHAR(45) NOT NULL,
-  `agree` TINYINT NOT NULL DEFAULT 0,
-  `permission` TINYINT NOT NULL DEFAULT 0,
+  `birth` DATE,
+  `agree` TINYINT DEFAULT 0,
+  `permission` TINYINT DEFAULT 0,
   `grade` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
@@ -75,7 +75,7 @@ ENGINE = InnoDB;
 
 use ssary;
 INSERT INTO `ssary`.`user` (`user_id`, `generate`, `class`, `name`, `email`, `birth`, `password`, `agree`, `permission`, `grade`) VALUES
-(1, 12, 1, 'admin', 'test1@test.com', '1990-01-01', '1234', 1, 1, 'admin'),
+(1, 12, 1, 'admin', 'admin@test.com', '1990-01-01', 'admin', 1, 1, 'admin'),
 (2, 12, 2, 'User1', 'test2@test.com', '1991-02-02', '1234', 1, 0, 'basic'),
 (3, 12, 4, 'User2', 'test3@test.com', '1992-03-03', '1234', 1, 0, 'basic'),
 (4, 12, 3, 'User3', 'test4@test.com', '1993-04-04', '1234', 1, 0, 'basic'),
@@ -86,5 +86,5 @@ INSERT INTO `ssary`.`user` (`user_id`, `generate`, `class`, `name`, `email`, `bi
 (9, 12, 6, 'User8', 'test9@test.com', '1998-09-09', '1234', 1, 0, 'basic'),
 (10, 12, 6, 'User9', 'test10@test.com', '1999-10-10', '1234', 1, 1, 'basic');
 
-
+USE ssary;
 SELECT * FROM USER;

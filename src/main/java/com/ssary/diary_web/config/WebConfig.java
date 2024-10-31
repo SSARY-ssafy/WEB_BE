@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 로그인 인터셉터 적용
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**") // 모든 경로에 대해 로그인 인터셉터 적용
-                .excludePathPatterns("/login","/waiting"); // 로그인 관련 경로는 제외
+                .excludePathPatterns("/login","/waiting","/regist"); // 로그인 관련 경로는 제외
 
         // 관리자 인터셉터 적용
         registry.addInterceptor(adminInterceptor)
