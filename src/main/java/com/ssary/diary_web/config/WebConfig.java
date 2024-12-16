@@ -1,31 +1,32 @@
 package com.ssary.diary_web.config;
 
-import com.ssary.diary_web.Interceptor.AdminInterceptor;
-import com.ssary.diary_web.Interceptor.LoginInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ssary.diary_web.Interceptor.JwtInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
-    AdminInterceptor adminInterceptor;
-
-    @Autowired
-    LoginInterceptor loginInterceptor;
+    private final JwtInterceptor jwtInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/user/**");
+    }
 
-        // 로그인 인터셉터 적용
-        registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/**") // 모든 경로에 대해 로그인 인터셉터 적용
-                .excludePathPatterns("/login","/waiting","/regist"); // 로그인 관련 경로는 제외
-
-        // 관리자 인터셉터 적용
-        registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("/list"); // /admin 경로에 대해서만 관리자 인터셉터 적용
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5173")  // 클라이언트의 주소
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("Authorization", "*")
+                .exposedHeaders("Authorization")
+                .allowCredentials(true);  // 인증 정보 허용
     }
 }
