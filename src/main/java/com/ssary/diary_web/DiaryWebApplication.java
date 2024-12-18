@@ -9,5 +9,4 @@ public class DiaryWebApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DiaryWebApplication.class, args);
 	}
-
 }

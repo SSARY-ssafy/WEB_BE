@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User List</title>
+</head>
+<body>
+<h1>User List</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>연번</th>
+        <th>기수</th>
+        <th>반</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>허가</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}" th:if="${user.permission==0}">
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.generate}"></td>
+        <td th:text="${user.classId}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:if="${user.permission == 0}">대기중</td>
+        <td th:if="${user.permission == 0}">
+            <form action="permit" method="post">
+                <input type="hidden" name="id" th:value="${user.userId}"></input>
+                <button>허가</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/">홈으로 이동</a>
+</body>
+</html>
