@@ -7,5 +7,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-    List<Todo> findByDate(LocalDate date); // 날짜별 할 일 조회
+    List<Todo> findByStartBetweenAndUserId(LocalDate start, LocalDate end, Long userId);
 }
