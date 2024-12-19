@@ -24,11 +24,13 @@ public class TodoController {
         return todoService.addTodo(request);
     }
 
-    // 날짜별 할 일 조회
+    // 날짜별 할 일 조회 (유저 기반)
     @GetMapping
     public List<TodoResponse> getTodosByDate(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return todoService.getTodosByDate(date);
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+            @RequestParam Long userId) {
+        return todoService.getTodosByDate(start, end, userId);
     }
 
     // 완료 상태 변경
