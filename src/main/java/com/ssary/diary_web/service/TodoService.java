@@ -21,17 +21,20 @@ public class TodoService {
     // 할 일 추가
     public TodoResponse addTodo(TodoRequest request) {
         Todo todo = Todo.builder()
+                .userId(request.getUserId())
                 .title(request.getTitle())
+                .content(request.getContent())
                 .completed(false) // 기본값은 false
-                .date(request.getDate())
+                .start(request.getStart())
+                .end(request.getEnd())
                 .build();
         todoRepository.save(todo);
         return convertToResponse(todo);
     }
 
-    // 날짜별 할 일 조회
-    public List<TodoResponse> getTodosByDate(LocalDate date) {
-        return todoRepository.findByDate(date)
+    // 날짜별 할 일 조회 (유저 기반)
+    public List<TodoResponse> getTodosByDate(LocalDate start, LocalDate end, Long userId) {
+        return todoRepository.findByStartBetweenAndUserId(start, end, userId)
                 .stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
@@ -44,7 +47,7 @@ public class TodoService {
         todoRepository.delete(todo);
     }
 
-    // 상태 변경 (뷰에서 요청 시 활용)
+    // 상태 변경
     public TodoResponse updateCompletion(Long id, boolean completed) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("할 일을 찾을 수 없습니다."));
@@ -56,9 +59,12 @@ public class TodoService {
     private TodoResponse convertToResponse(Todo todo) {
         return TodoResponse.builder()
                 .id(todo.getId())
+                .userId(todo.getUserId())
                 .title(todo.getTitle())
+                .content(todo.getContent())
                 .completed(todo.isCompleted())
-                .date(todo.getDate())
+                .start(todo.getStart())
+                .end(todo.getEnd())
                 .build();
     }
 }
