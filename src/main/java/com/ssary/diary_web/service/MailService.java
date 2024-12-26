@@ -23,7 +23,6 @@ public class MailService {
 
     private final JavaMailSender mailSender;
     private final UserService userService;
-    private String authCode;
 
     public void sendFindPassWordEmail(String email) throws MessageRemovedException{
         MimeMessagePreparator preparator = mimeMessage -> {
@@ -52,7 +51,8 @@ public class MailService {
         }
     }
 
-    public void sendAuthEmail(String email, String authCode) throws MessageRemovedException{
+    public String sendAuthEmail(String email) throws MessageRemovedException{
+        String authCode = randomString();
         MimeMessagePreparator preparator = mimeMessage -> {
 
             // HTML 템플릿 로드
@@ -72,6 +72,7 @@ public class MailService {
         try {
             log.info(email);
             this.mailSender.send(preparator);
+            return authCode;
         } catch (MailException e) {
             log.info("ERROR: Message 전송 실패");
             throw e;

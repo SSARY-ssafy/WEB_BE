@@ -1,24 +1,23 @@
 package com.ssary.diary_web.controller;
 
 import com.ssary.diary_web.domain.User;
+import com.ssary.diary_web.dto.userAuth.EmailDto;
+import com.ssary.diary_web.dto.userAuth.FindUserEmailDto;
 import com.ssary.diary_web.dto.userAuth.LoginDto;
 import com.ssary.diary_web.service.MailService;
 import com.ssary.diary_web.service.TokenService;
 import com.ssary.diary_web.service.UserService;
+import jakarta.mail.MessageRemovedException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -45,9 +44,43 @@ public class UserController {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + token); // Authorization 헤더에 JWT 토큰 추가
             user.setPassword("");
+            log.info("로그인 성공");
             return new ResponseEntity<>(user,headers,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/findEmail")
+    public ResponseEntity<String> findUserEmail(@RequestBody FindUserEmailDto findUserEmailDto){
+        log.info(findUserEmailDto.toString());
+        String email = userService.findUserEmail(findUserEmailDto);
+        if(email!=null) return new ResponseEntity<>(email,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PatchMapping("/changeUserPassword")
+    public ResponseEntity<String> changeUserPassword(@RequestBody EmailDto emailDto) throws MessageRemovedException {
+        log.info(emailDto.getEmail()    );
+        User user = userService.findUserByEmail(emailDto.getEmail());
+        if(user==null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        mailService.sendFindPassWordEmail(user.getEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/authEmail")
+    public ResponseEntity<String> authEmail(@RequestBody EmailDto emailDto) throws MessageRemovedException{
+        String code = mailService.sendAuthEmail(emailDto.getEmail());
+        if(code!=null) return ResponseEntity.ok(code);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> regist(@RequestBody User user){
+        User newUser =  userService.saveUser(user);
+        if(newUser==null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/waiting")
@@ -72,14 +105,4 @@ public class UserController {
         return "redirect:/list";
     }
 
-    @GetMapping("/regist")
-    public String registform(){
-        return "registform";
-    }
-
-    @PostMapping("/regist")
-    public String regist(@ModelAttribute User user){
-        userService.saveUser(user);
-        return "redirect:/login";
-    }
 }

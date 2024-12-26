@@ -1,11 +1,12 @@
 package com.ssary.diary_web.domain;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,11 +19,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private Integer generate;
-    @Column(name = "class")
     private Integer classId;
     private String name;
     private String email;
-    private Date birth;
+    private LocalDate birth;
     private String grade = "basic";
     private String password;
     private Byte permission = 0;

@@ -1,11 +1,10 @@
 package com.ssary.diary_web.service;
 
 import com.ssary.diary_web.domain.User;
-import com.ssary.diary_web.dto.userAuth.EmailDto;
+import com.ssary.diary_web.dto.userAuth.FindUserEmailDto;
 import com.ssary.diary_web.dto.userAuth.LoginDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -24,4 +23,6 @@ public interface UserService {
     // 사용자 인증
     public boolean permitUser(int userId);
 
+    // 유저 이메일 조회
+    public String findUserEmail(FindUserEmailDto findUserEmailDto);
 }

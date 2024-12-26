@@ -2,8 +2,10 @@ package com.ssary.diary_web.service;
 
 import com.ssary.diary_web.domain.User;
 import com.ssary.diary_web.dto.userAuth.EmailDto;
+import com.ssary.diary_web.dto.userAuth.FindUserEmailDto;
 import com.ssary.diary_web.dto.userAuth.LoginDto;
 import com.ssary.diary_web.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -68,5 +71,17 @@ public class UserServiceImpl implements UserService{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String findUserEmail(FindUserEmailDto dto) {
+        Optional<User> userOptional = userRepository.findUserByParams(
+                dto.getName(),
+                dto.getGenerate(),
+                dto.getClassId(),
+                dto.getBirth()
+        );
+        log.info(userOptional.get().toString());
+        return userOptional.map(User::getEmail).orElse(null);
     }
 }
