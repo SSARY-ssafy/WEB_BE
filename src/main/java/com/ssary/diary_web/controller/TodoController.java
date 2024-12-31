@@ -4,6 +4,7 @@ import com.ssary.diary_web.dto.TodoRequest;
 import com.ssary.diary_web.dto.TodoResponse;
 import com.ssary.diary_web.service.TodoService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +21,24 @@ public class TodoController {
 
     // 할 일 추가
     @PostMapping
-    public TodoResponse addTodo(@RequestBody TodoRequest request) {
-        return todoService.addTodo(request);
+    public TodoResponse addTodo(@RequestBody TodoRequest request, HttpServletRequest httpServletRequest) {
+        Object userIdAttr = httpServletRequest.getAttribute("userId");
+        if (userIdAttr == null || !(userIdAttr instanceof String)) {
+            throw new IllegalArgumentException("Invalid userId in request");
+        }
+
+        // String -> Integer 변환
+        Integer userId = Integer.valueOf((String) userIdAttr);
+
+        return todoService.addTodo(request, userId);
     }
 
-    // 날짜별 할 일 조회 (유저 기반)
+
+    // 날짜별 할 일 조회
     @GetMapping
     public List<TodoResponse> getTodosByDate(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
-            @RequestParam Long userId) {
-        return todoService.getTodosByDate(start, end, userId);
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return todoService.getTodosByDate(date);
     }
 
     // 완료 상태 변경
