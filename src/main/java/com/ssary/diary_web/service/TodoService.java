@@ -19,15 +19,24 @@ public class TodoService {
     private final TodoRepository todoRepository;
 
     // 할 일 추가
-    public TodoResponse addTodo(TodoRequest request) {
+    public TodoResponse addTodo(TodoRequest request, Integer userId) {
+        LocalDate startDate = request.getStart() != null ? request.getStart() : LocalDate.now();
+        LocalDate endDate = request.getEnd() != null ? request.getEnd() : LocalDate.now().plusDays(1);
+
         Todo todo = Todo.builder()
                 .title(request.getTitle())
-                .completed(false) // 기본값은 false
+                .content(request.getContent() != null ? request.getContent() : "") // content 기본값
                 .date(request.getDate())
+                .start(startDate) // start 값 설정
+                .end(endDate) // end 값 설정
+                .completed(false)
+                .userId(userId)
                 .build();
         todoRepository.save(todo);
         return convertToResponse(todo);
     }
+
+
 
     // 날짜별 할 일 조회
     public List<TodoResponse> getTodosByDate(LocalDate date) {
@@ -59,6 +68,9 @@ public class TodoService {
                 .title(todo.getTitle())
                 .completed(todo.isCompleted())
                 .date(todo.getDate())
+                .content(todo.getContent())
+                .start(todo.getStart())
+                .end(todo.getEnd())
                 .build();
     }
 }
