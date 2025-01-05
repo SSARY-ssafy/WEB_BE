@@ -18,19 +18,19 @@ public class LikeService {
         return likeRepository.findByUserId(userId);
     }
 
-    public void addFavorite(Long userId, Long companyId) {
+    public void addFavorite(Long userId, String companyId) {
         if (likeRepository.existsByUserIdAndCompanyId(userId, companyId)) {
-            throw new IllegalStateException("Favorite already exists");
+            throw new IllegalStateException("Like already exists");
         }
-        Like favorite = new Like();
-        favorite.setUserId(userId);
-        favorite.setCompanyId(companyId);
-        likeRepository.save(favorite);
+        Like like = new Like();
+        like.setUserId(userId);
+        like.setCompanyId(companyId);
+        likeRepository.save(like);
     }
 
-    public void removeFavorite(Long userId, Long companyId) {
-        Like favorite = likeRepository.findByUserIdAndCompanyId(userId, companyId)
-                .orElseThrow(() -> new IllegalStateException("Favorite not found"));
-        likeRepository.delete(favorite);
+    public void removeFavorite(Long userId, String companyId) {
+        Like like = likeRepository.findByUserIdAndCompanyId(userId, companyId)
+                .orElseThrow(() -> new IllegalStateException("Like not found"));
+        likeRepository.delete(like);
     }
 }

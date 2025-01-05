@@ -22,22 +22,22 @@ public class LikeController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addFavorite(@RequestParam Long userId, @RequestParam Long companyId) {
+    public ResponseEntity<String> addFavorite(@RequestParam Long userId, @RequestParam String companyId) {
         try {
             likeService.addFavorite(userId, companyId);
-            return ResponseEntity.ok("Added to favorites");
+            return ResponseEntity.ok("Added to likes");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to add favorite: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to add like: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeFavorite(@RequestParam Long userId, @RequestParam Long companyId) {
+    public ResponseEntity<String> removeFavorite(@RequestParam Long userId, @RequestParam String companyId) {
         try {
             likeService.removeFavorite(userId, companyId);
-            return ResponseEntity.ok("Removed from favorites");
+            return ResponseEntity.ok("Removed from likes");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to remove favorite: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to remove like: " + e.getMessage());
         }
     }
 
